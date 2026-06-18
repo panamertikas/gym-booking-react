@@ -34,7 +34,7 @@ npm run dev
 
 ## Default Users
 - Admin: `admin` / `admin123`
-- User: `user@gmail.com` / `123456`
+- Sample users (20 total): `nikos@gmail.com`, `maria@gmail.com`, `kostas@gmail.com`, etc. — all with password `123456`
 
 ## Pages
 
