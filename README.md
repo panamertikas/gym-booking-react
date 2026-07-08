@@ -12,7 +12,25 @@ A gym booking management system frontend built with React and Vite.
 - Node.js 18+
 - Docker Desktop (for the backend)
 
-## Setup
+## Build and Deploy
+
+### Step 1: Start the Backend (Docker)
+
+1. Stop local MySQL if running (Windows PowerShell as Administrator):
+```bash
+net stop MySQL80
+```
+
+2. Clone and start the backend:
+```bash
+git clone https://github.com/panamertikas/gym-booking-spring.git
+cd gym-booking-spring
+docker-compose up --build -d
+```
+
+The backend API will be available at `http://localhost:8080`
+
+### Step 2: Start the Frontend (React)
 
 1. Clone the repository:
 ```bash
@@ -32,6 +50,8 @@ npm run dev
 
 4. Open `http://localhost:5173`
 
+The Vite dev server proxies all `/api` requests to the backend at `http://localhost:8080`.
+
 ## Default Users
 - Admin: `admin` / `admin123`
 - Sample users (20 total): `nikos@gmail.com`, `maria@gmail.com`, `kostas@gmail.com`, etc. — all with password `123456`
@@ -48,35 +68,6 @@ npm run dev
 - `/dashboard` - Available classes with calendar booking
 - `/my-bookings` - My bookings
 - `/profile` - My profile
-
-## Running the Full Application
-
-### Prerequisites
-- Docker Desktop installed and running
-- Node.js 18+
-
-### Steps
-
-1. Stop local MySQL (run PowerShell as Administrator):
-```bash
-net stop MySQL80
-```
-
-2. Start Docker containers:
-```bash
-cd gym-booking-spring
-docker-compose up -d
-```
-
-3. Start React frontend:
-```bash
-cd gym-booking-react
-npm run dev
-```
-
-4. Open `http://localhost:5173`
-
-**Note:** Default users are created automatically when the application starts.
 
 ## Related Projects
 - [GymBooking Spring Boot API](https://github.com/panamertikas/gym-booking-spring)
