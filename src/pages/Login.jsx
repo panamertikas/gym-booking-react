@@ -4,8 +4,12 @@ import { useNavigate } from 'react-router-dom'
 function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [firstname, setFirstname] = useState('')
+  const [lastname, setLastname] = useState('')
+  const [age, setAge] = useState('')
   const [message, setMessage] = useState('')
   const [isError, setIsError] = useState(false)
+  const [isRegisterMode, setIsRegisterMode] = useState(false)
   const navigate = useNavigate()
 
   async function login() {
@@ -34,12 +38,13 @@ function Login() {
     const response = await fetch('/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
+      body: JSON.stringify({ username, password, firstname, lastname, age: parseInt(age) })
     })
 
     if (response.ok) {
       setIsError(false)
       setMessage('Registered successfully! Please login.')
+      setIsRegisterMode(false)
     } else {
       setIsError(true)
       setMessage('Username already exists!')
@@ -50,10 +55,37 @@ function Login() {
     <div style={styles.container}>
       <div style={styles.card}>
         <h1 style={styles.title}>🏋️ GymBooking</h1>
+
+        {isRegisterMode && (
+          <>
+            <input
+              style={styles.input}
+              type="text"
+              placeholder="First Name"
+              value={firstname}
+              onChange={e => setFirstname(e.target.value)}
+            />
+            <input
+              style={styles.input}
+              type="text"
+              placeholder="Last Name"
+              value={lastname}
+              onChange={e => setLastname(e.target.value)}
+            />
+            <input
+              style={styles.input}
+              type="number"
+              placeholder="Age"
+              value={age}
+              onChange={e => setAge(e.target.value)}
+            />
+          </>
+        )}
+
         <input
           style={styles.input}
           type="text"
-          placeholder="Username"
+          placeholder="Email"
           value={username}
           onChange={e => setUsername(e.target.value)}
         />
@@ -64,8 +96,19 @@ function Login() {
           value={password}
           onChange={e => setPassword(e.target.value)}
         />
-        <button style={styles.button} onClick={login}>Login</button>
-        <button style={styles.button} onClick={register}>Register</button>
+
+        {isRegisterMode ? (
+          <>
+            <button style={styles.button} onClick={register}>Register</button>
+            <button style={styles.secondaryButton} onClick={() => setIsRegisterMode(false)}>Back to Login</button>
+          </>
+        ) : (
+          <>
+            <button style={styles.button} onClick={login}>Login</button>
+            <button style={styles.secondaryButton} onClick={() => setIsRegisterMode(true)}>Create Account</button>
+          </>
+        )}
+
         {message && (
           <p style={{ color: isError ? 'red' : 'green', textAlign: 'center' }}>
             {message}
@@ -110,6 +153,16 @@ const styles = {
     backgroundColor: '#333',
     color: 'white',
     border: 'none',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    marginBottom: '10px'
+  },
+  secondaryButton: {
+    width: '100%',
+    padding: '10px',
+    backgroundColor: 'white',
+    color: '#333',
+    border: '1px solid #333',
     borderRadius: '4px',
     cursor: 'pointer',
     marginBottom: '10px'
