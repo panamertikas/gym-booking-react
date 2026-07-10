@@ -88,6 +88,7 @@ function Login() {
           placeholder="Email"
           value={username}
           onChange={e => setUsername(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' && login()}
         />
         <input
           style={styles.input}
@@ -95,6 +96,7 @@ function Login() {
           placeholder="Password"
           value={password}
           onChange={e => setPassword(e.target.value)}
+          onKeyDown={e => e.key === 'Enter' && login()}
         />
 
         {isRegisterMode ? (
